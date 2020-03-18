@@ -9,6 +9,12 @@ function reducer(state: IState, { type, payload }: any): object {
     case ActionType.LOCK_APP:
       return { ...state, appUnlocked: false };
 
+    case ActionType.SET_NODES_LIST:
+      return { ...state, nodes: payload };
+
+    case ActionType.SET_PRIVATE_KEY:
+      return { ...state, privateKey: payload };
+
     default:
       return state;
   }

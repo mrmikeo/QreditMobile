@@ -3,7 +3,8 @@ import { IState } from './types';
 import reducers from './reducers';
 
 const intialState: IState = {
-  privateKey: ''
+  privateKey: '',
+  nodes : []
 };
 
 export const Store = React.createContext<IState | any>(intialState);
