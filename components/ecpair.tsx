@@ -5,6 +5,8 @@ const bs58 = require('bs58')
 var typeforce = require('typeforce')
 var types = require('./types')
 
+import { Buffer } from 'buffer'
+
 
 var NETWORKS = require('./networks')
 var BigInteger = require('bigi')
@@ -18,7 +20,7 @@ function uint256(x, base) {
   return new BN(x, base)
 }
 
-const N  = uint256("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141", 16)
+const N = uint256("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141", 16)
 
 /**
  * Provide either `d` or `Q` but not both.
@@ -30,7 +32,7 @@ const N  = uint256("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD036
  * @param {boolean} [options.compressed=true]
  * @param {Network} [options.network=networks.ark]
  */
-export function ECPair (d, Q, options) {
+export function ECPair(d, Q, options) {
   if (options) {
     typeforce({
       compressed: types.maybe(types.Boolean),
@@ -57,19 +59,19 @@ export function ECPair (d, Q, options) {
 }
 
 
-export async function fromSeed (seed, options) {
+export async function fromSeed(seed, options) {
 
   const digest = await Crypto.digestStringAsync(
     Crypto.CryptoDigestAlgorithm.SHA256,
-    seed
+    new Buffer(seed, "utf-8").toString()
   );
 
   // var hash = bcrypto.sha256(new Buffer(seed,"utf-8"))
   var d = BigInteger.fromBuffer(digest)
-  if(d.signum() <= 0 || d.compareTo(N) >= 0){
+  if (d.signum() <= 0 || d.compareTo(N) >= 0) {
     throw new Error("seed cannot resolve to a compatible private key")
   }
-  else{
+  else {
     return new ECPair(d, null, options)
   }
 }
