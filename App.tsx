@@ -108,7 +108,7 @@ export default function App(props) {
                   <Stack.Screen name="Root" component={BottomTabNavigator} />
                 </Stack.Navigator>
               </NavigationContainer>
-              : <WalletScreen onSetPrivateKey={(key) => setPrivateKey(key)} />
+              : <WalletScreen onSetPrivateKey={(key) => {console.log(key); setPrivateKey(key)}} />
           }
         </View>
       </StoreProvider>

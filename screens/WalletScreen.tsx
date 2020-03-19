@@ -17,6 +17,7 @@ import { SetNodesList, SetPrivateKey } from '../store/actions';
 export default function WalletScreen({ onSetPrivateKey }) {
 
   const {
+    state: { privateKey },
     dispatch
   } = React.useContext(Store);
 
@@ -57,7 +58,6 @@ export default function WalletScreen({ onSetPrivateKey }) {
                 })
               })
 
-              onSetPrivateKey(responseKey.data);
             });
           });
         }}
@@ -105,7 +105,7 @@ export default function WalletScreen({ onSetPrivateKey }) {
                     <TouchableOpacity
                       disabled={!checkBox}
                       style={[styles.touchButton, { backgroundColor: Colors.bitFlexLightBlue, marginTop: 30, margin: 25, marginBottom: 0 }, styles.shadowButtom]}
-                      onPress={() => { alert("GO NEXT") }}>
+                      onPress={() => { onSetPrivateKey(privateKey); }}>
                       <Text style={[styles.title, { fontWeight: '600', fontSize: RFValue(22), color: 'white', fontFamily: 'Montserrat' }]}>CONTINUE</Text>
                     </TouchableOpacity>
                   </View>
